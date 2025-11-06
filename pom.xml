@@ -14,7 +14,7 @@
 	<name>awsimageupload</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>21</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -40,6 +40,26 @@
 
 	<build>
 		<plugins>
+			<!-- compile with the project's java.version -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
+				<configuration>
+					<!-- Compile to a Java 17-compatible bytecode so Spring Boot 2.7.x tooling/ASM can read test classes.
+					     If you want to target Java 21 bytecode, upgrade the Spring Boot version to a release that
+					     supports Java 21 (e.g., Spring Boot 3.2+). -->
+					<release>17</release>
+				</configuration>
+			</plugin>
+
+			<!-- newer surefire supports modern class file versions (Java 17+ / 21+) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M7</version>
+			</plugin>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
